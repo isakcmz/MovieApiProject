@@ -12,7 +12,7 @@ namespace MovieApi.Persistence.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=LAPTOP-SPG6ILB4\\SQLEXPRESS;initial Catalog=MovieApiDb=;integrated Security=true");
+            optionsBuilder.UseSqlServer("Server=LAPTOP-SPG6ILB4\\SQLEXPRESS;initial Catalog=MovieApiDb=;integrated Security=true; TrustServerCertificate=true");
         }
 
         public DbSet<Category> Categories { get; set; }

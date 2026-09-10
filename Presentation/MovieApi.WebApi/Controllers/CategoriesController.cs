@@ -59,7 +59,7 @@ namespace MovieApi.WebApi.Controllers
         public async Task<IActionResult> UpdateCategory(UpdateCategoryCommand command)
         {
             await _updateCategoryCommandHandler.Handle(command);
-            return Ok("Kategori Güncelleme İşlemi Başrılı")
+            return Ok("Kategori Güncelleme İşlemi Başrılı");
         }
 
 

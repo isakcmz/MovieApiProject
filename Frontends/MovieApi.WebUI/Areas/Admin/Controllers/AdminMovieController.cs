@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieApi.Dto.Dtos.AdminMovieDtos;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace MovieApi.WebUI.Areas.Admin.Controllers
 {
@@ -30,5 +31,35 @@ namespace MovieApi.WebUI.Areas.Admin.Controllers
 
             return View();
         }
+
+
+
+
+        [HttpGet]
+        public IActionResult CreateMovie()
+        {
+            return View();
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> CreateMovie(AdminCreateMovieDto adminCreateMovieDto)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var jsonData = JsonConvert.SerializeObject(adminCreateMovieDto);
+            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var responseMessage = await client.PostAsync("https://localhost:7047/api/Movies", stringContent);
+
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("MovieList");
+            }
+            
+            return View();
+        }
+
+
+
     }
 }

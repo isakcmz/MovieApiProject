@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieApi.Dto.Dtos.AdminCategoryDtos;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace MovieApi.WebUI.Areas.Admin.Controllers
 {
@@ -29,5 +30,35 @@ namespace MovieApi.WebUI.Areas.Admin.Controllers
 
             return View();
         }
+
+
+
+
+        [HttpGet]
+        public IActionResult CreateCategory()
+        {
+            return View();
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCategory(AdminCreateCategoryDto adminCreateCategoryDto)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var jsonData = JsonConvert.SerializeObject(adminCreateCategoryDto);
+            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var responseMessage = await client.PostAsync("https://localhost:7047/api/Categories", stringContent);
+
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("CategoryList");
+            }
+
+            return View();
+
+        }
+
+
     }
 }

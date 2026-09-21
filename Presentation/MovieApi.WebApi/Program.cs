@@ -1,13 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
-using MovieApi.Application.Features.CQRSDesignPattern.Handlers.CategoryHandlers;
-using MovieApi.Application.Features.CQRSDesignPattern.Handlers.MovieHandlers;
-using MovieApi.Application.Features.CQRSDesignPattern.Handlers.SeriesHandlers;
-using MovieApi.Application.Features.CQRSDesignPattern.Handlers.UserRegisterHandlers;
+using MovieApi.WebApi.Extensions;
 using MovieApi.Application.Features.MediatorDesignPattern.Handlers.TagHandlers;
 using MovieApi.Persistence.Context;
 using MovieApi.Persistence.Identity;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,28 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MovieContext>();
 
 
-builder.Services.AddScoped<GetCategoryQueryHandler>();
-builder.Services.AddScoped<GetCategoryByIdQueryHandler>();
-builder.Services.AddScoped<CreateCategoryCommandHandler>();
-builder.Services.AddScoped<UpdateCategoryCommandHandler>();
-builder.Services.AddScoped<RemoveCategoryCommandHandler>();
-
-builder.Services.AddScoped<GetMovieQueryHandler>();
-builder.Services.AddScoped<GetMovieByIdQueryHandler>();
-builder.Services.AddScoped<CreateMovieCommandHandler>();
-builder.Services.AddScoped<UpdateMovieCommandHandler>();
-builder.Services.AddScoped<RemoveMovieCommandHandler>();
+builder.Services.AddApplicationServices();
 
 
-builder.Services.AddScoped<GetSeriesQueryHandler>();
-builder.Services.AddScoped<GetSeriesByIdQueryHandler>();
-builder.Services.AddScoped<CreateSeriesCommandHandler>();
-builder.Services.AddScoped<UpdateSeriesCommandHandler>();
-builder.Services.AddScoped<RemoveSeriesCommandHandler>();
-
-
-
-builder.Services.AddScoped<CreateUserRegisterCommandHandler>();
 builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<MovieContext>();
 
 

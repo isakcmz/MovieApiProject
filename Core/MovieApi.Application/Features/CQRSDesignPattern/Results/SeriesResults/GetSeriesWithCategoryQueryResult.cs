@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MovieApi.Application.Features.CQRSDesignPattern.Results.SeriesResults
 {
-    public class GetSeriesQueryResult
+    public class GetSeriesWithCategoryQueryResult
     {
         public int SeriesId { get; set; }
         public string Title { get; set; }
@@ -22,5 +22,7 @@ namespace MovieApi.Application.Features.CQRSDesignPattern.Results.SeriesResults
         public string Status { get; set; }
 
         public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
+
     }
 }

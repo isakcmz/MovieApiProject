@@ -15,16 +15,18 @@ namespace MovieApi.WebApi.Controllers
         private readonly CreateSeriesCommandHandler _createSeriesCommandHandler;
         private readonly UpdateSeriesCommandHandler _updateSeriesCommandHandler;
         private readonly RemoveSeriesCommandHandler _removeSeriesCommandHandler;
+        private readonly GetSeriesWithCategoryQueryHandler _getSeriesWithCategoryQueryHandler;
 
-        public SeriesesController(GetSeriesByIdQueryHandler getSeriesByIdQueryHandler, GetSeriesQueryHandler getSeriesQueryHandler, 
-                CreateSeriesCommandHandler createSeriesCommandHandler, UpdateSeriesCommandHandler updateSeriesCommandHandler, 
-                RemoveSeriesCommandHandler removeSeriesCommandHandler)
+        public SeriesesController(GetSeriesByIdQueryHandler getSeriesByIdQueryHandler, GetSeriesQueryHandler getSeriesQueryHandler,
+                CreateSeriesCommandHandler createSeriesCommandHandler, UpdateSeriesCommandHandler updateSeriesCommandHandler,
+                RemoveSeriesCommandHandler removeSeriesCommandHandler, GetSeriesWithCategoryQueryHandler getSeriesWithCategoryQueryHandler)
         {
             _getSeriesByIdQueryHandler = getSeriesByIdQueryHandler;
             _getSeriesQueryHandler = getSeriesQueryHandler;
             _createSeriesCommandHandler = createSeriesCommandHandler;
             _updateSeriesCommandHandler = updateSeriesCommandHandler;
             _removeSeriesCommandHandler = removeSeriesCommandHandler;
+            _getSeriesWithCategoryQueryHandler = getSeriesWithCategoryQueryHandler;
         }
 
 
@@ -79,6 +81,16 @@ namespace MovieApi.WebApi.Controllers
             return Ok("Dizi Güncelleme İşlemi Başarılı");
         }
 
+
+
+
+
+        [HttpGet("GetSeriesWithCategory")]
+        public async Task<IActionResult> GetSeriesWithCategory()
+        {
+            var value = await _getSeriesWithCategoryQueryHandler.Handle();
+            return Ok(value);
+        }
 
 
     }

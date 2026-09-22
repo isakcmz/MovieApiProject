@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MovieApi.Application.Features.CQRSDesignPattern.Commands.UserRegisterCommands;
 using MovieApi.Application.Features.CQRSDesignPattern.Handlers.UserRegisterHandlers;
 
@@ -24,6 +25,19 @@ namespace MovieApi.WebApi.Controllers
         {
             await _createUserRegisterCommandHandler.Handle(command);
             return Ok("Kullanıcı başarıyla eklendi.");
+        }
+
+
+
+        [HttpPost("Bulk")]
+        public async Task<IActionResult> CreateUserRegisterBulk( List<CreateUserRegisterCommand> commands )
+        {
+            foreach (var command in commands)
+            {
+                await _createUserRegisterCommandHandler.Handle(command);
+            }
+
+            return Ok($"{commands.Count} kullanıcı başarıyla eklendi");
         }
 
 

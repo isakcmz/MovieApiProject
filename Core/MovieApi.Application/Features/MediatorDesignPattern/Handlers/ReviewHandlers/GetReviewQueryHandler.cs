@@ -17,20 +17,24 @@ namespace MovieApi.Application.Features.MediatorDesignPattern.Handlers.ReviewHan
 
         public async Task<List<GetReviewQueryResult>> Handle(GetReviewQuery request, CancellationToken cancellationToken)
         {
-            var values = await _context.Reviews.ToListAsync();
-            return values.Select(x => new GetReviewQueryResult
-            {
-                ReviewId = x.ReviewId,
-                IsSpoiler = x.IsSpoiler,
-                LikeCount = x.LikeCount,
-                MovieId = x.MovieId,
-                ReviewComment = x.ReviewComment,
-                ReviewDate = x.ReviewDate,
-                SentimentScore = x.SentimentScore,
-                Status = x.Status,
-                UserId = x.UserId,
-                UserRating = x.UserRating,
-            }).ToList();
+            var values = await _context.Reviews
+                .Skip((request.Page - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .Select(x => new GetReviewQueryResult
+                {
+                    ReviewId = x.ReviewId,
+                    IsSpoiler = x.IsSpoiler,
+                    LikeCount = x.LikeCount,
+                    MovieId = x.MovieId,
+                    ReviewComment = x.ReviewComment,
+                    ReviewDate = x.ReviewDate,
+                    SentimentScore = x.SentimentScore,
+                    Status = x.Status,
+                    UserId = x.UserId,
+                    UserRating = x.UserRating
+                }).ToListAsync();
+
+            return values;
         }
     }
 }

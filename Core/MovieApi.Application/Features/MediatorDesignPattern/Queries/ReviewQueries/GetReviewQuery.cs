@@ -5,5 +5,7 @@ namespace MovieApi.Application.Features.MediatorDesignPattern.Queries.ReviewQuer
 {
     public class GetReviewQuery : IRequest<List<GetReviewQueryResult>>
     {
+        public int Page { get; set; }
+        public int PageSize { get; set; } = 10;
     }
 }
